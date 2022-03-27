@@ -1,0 +1,40 @@
+# import packages
+import statistics 
+import pandas as pd
+import scipy.stats as stats
+from scipy.stats import sem
+from statistics import mean, stdev
+import matplotlib.pyplot as plt
+#include if using a jupyter notebook, remove if using a .py file
+%matplotlib inline  
+
+# data
+glucose = [300, 250 ,275]
+pyruvate = [75, 62, 124]
+
+# find the mean using the mean() function from the statistics library
+glucose_mean = mean(glucose)
+pyruvate_mean = mean(pyruvate)
+
+# find the standard deviation using the stdev() function from the statistics library
+glucose_stdev = stdev(glucose)
+pyruvate_stdev = stdev(pyruvate)
+
+# find the standard error using SciPY
+glucose_sem = sem(glucose)
+pyruvate_sem = sem(pyruvate)
+
+# build a bar plot
+plt.bar(['glucose', 'pyruvate'],[glucose_mean, pyruvate_mean], yerr=[glucose_sem, pyruvate_sem], capsize=10)
+plt.xlabel('Substrate)')
+plt.ylabel('ppm/min')
+plt.title('Anaerobic Fermentation by Substrate')
+plt.savefig('plot.png')
+plt.show()
+
+#Open and Closed refer to your groups that you are comparing
+
+res = stats.ttest_ind(glucose, pyruvate, 
+                      equal_var=True)
+
+display(res)
